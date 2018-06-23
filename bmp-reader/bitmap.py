@@ -63,7 +63,14 @@ class Bitmap:
 
     #Task for class
     #Write a method to flip an image vertically
-
+    def flip_vertical(self):
+        half_height = int(self.height / 2)
+        for r in range(0, half_height):
+            for c in range(0, self.width):
+                pixel1 = self.get_pixel(r, c)
+                pixel2 = self.get_pixel(self.height - 1 - r, c)
+                self.set_pixel(r, c, pixel2[0], pixel2[1], pixel2[2])
+                self.set_pixel(self.height - 1 - r, c, pixel1[0], pixel1[1], pixel1[2])
 
 
     #H/W #3
@@ -92,18 +99,41 @@ class Bitmap:
             file.close()
 
 
+    # H/W #4
+    # rotate the image clockwise by 90 degrees
+    def rotate_clockwise_90(self):
+
+    # H/W #5
+    # rotate the image counter clockwise by 90 degrees
+    def rotate_counter_clockwise_90(self):
+
+
+    # H/W #6
+    # create a cropped version of the current image
+    def crop(self, start_row, start_col, end_row, end_col):
+
+
+    # H/W #7
+    # create a blank bitmap based on the dimension given
+    def create_bitmap(self, width, height):
+
+
+    # H/W #8
+    # have a look at HIPR (Worksheet - Image Arithmetic, in particular)
+
 #write a method in this class that writes the output to a file
 
 
 print("Hello IP...")
 bitmap = Bitmap()
-bitmap.read_file("beetroot1.bmp")
-# bitmap.read_file("test1.bmp")
+# bitmap.read_file("beetroot1.bmp")
+bitmap.read_file("test1.bmp")
 print("Pixel 0, 0", bitmap.get_pixel(0, 199))
 #
 # for c in range(0, 50):
 #     bitmap.set_pixel(3, c, 255, 255, 0)
-bitmap.flip_horizontal()
+# bitmap.flip_vertical()
+bitmap.rotate_clockwise_90()
 #bitmap.increase_brightness(0.25)
-bitmap.write_file("beetroot2.bmp")
-# bitmap.write_file("test2.bmp")
+#bitmap.write_file("beetroot2.bmp")
+bitmap.write_file("test2.bmp")
