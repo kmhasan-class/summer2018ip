@@ -54,15 +54,15 @@ class Bitmap:
     def flip_horizontal(self):
         half_width = int(self.width / 2)
         for r in range(0, self.height):
-            for c in range(0, half_width, 3):
-                r1, c1 = r, c
-                offset1 = self.get_offset(r1, c1)
-                r2, c2 = r, self.width - c - 3
-                # print(r1, c1, " <---> ", r2, c2)
-                offset2 = self.get_offset(r2, c2)
-                #self.byte_array[offset1 + 0], self.byte_array[offset2 + 0] = self.byte_array[offset2 + 0], self.byte_array[offset1 + 0]
-                self.byte_array[offset1 + 1], self.byte_array[offset2 + 1] = self.byte_array[offset2 + 1], self.byte_array[offset1 + 1]
-                # self.byte_array[offset1 + 2], self.byte_array[offset2 + 2] = self.byte_array[offset2 + 2], self.byte_array[offset1 + 2]
+            for c in range(0, half_width):
+                pixel1 = self.get_pixel(r, c)
+                pixel2 = self.get_pixel(r, self.width - 1 - c)
+                self.set_pixel(r, c, pixel2[0], pixel2[1], pixel2[2])
+                self.set_pixel(r, self.width - 1 - c, pixel1[0], pixel1[1], pixel1[2])
+
+
+    #Task for class
+    #Write a method to flip an image vertically
 
 
 
@@ -103,7 +103,7 @@ print("Pixel 0, 0", bitmap.get_pixel(0, 199))
 #
 # for c in range(0, 50):
 #     bitmap.set_pixel(3, c, 255, 255, 0)
-#bitmap.flip_horizontal()
-bitmap.increase_brightness(0.25)
+bitmap.flip_horizontal()
+#bitmap.increase_brightness(0.25)
 bitmap.write_file("beetroot2.bmp")
 # bitmap.write_file("test2.bmp")
