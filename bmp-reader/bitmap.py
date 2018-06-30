@@ -115,7 +115,31 @@ class Bitmap:
                 self.set_pixel(r, c, red, red, red)
 
 
-    # C/W #1
+    def extract_green_channel(self):
+        for r in range(0, self.height):
+            for c in range(0, self.width):
+                red, green, blue = self.get_pixel(r, c)
+                # average = int((red + red + red) / 3)
+                self.set_pixel(r, c, green, green, green)
+
+
+    def extract_magenta_channel(self):
+        for r in range(0, self.height):
+            for c in range(0, self.width):
+                red, green, blue = self.get_pixel(r, c)
+                R = red / 255
+                G = green / 255
+                B = blue / 255
+                K = 1 - max(R, G, B)
+                C = (1 - R - K) / (1 - K)
+                M = (1 - G - K) / (1 - K)
+                Y = (1 - B - K) / (1 - K)
+                # average = int((red + red + red) / 3)
+                magenta = int(M * 255)
+                self.set_pixel(r, c, magenta, magenta, magenta)
+
+
+                        # C/W #1
     # do the extraction for G and B. And also for C, M, Y and K.
 
     # C/W #2
@@ -150,19 +174,21 @@ class Bitmap:
 
 #write a method in this class that writes the output to a file
 
-def convert_to(number_in_decimal, base):
+def convert_to(number_in_decimal, base, n):
     number = number_in_decimal
-    digits = []
+    digits = [0] * n
+    n = n - 1
     while number > 0:
         digit = number % base
         number = int(number / base)
-        digits.append(digit)
+        digits[n] = digit
+        n = n - 1
     #H/W: make sure you return the reversed result
     return digits
 
 
 print("Hello IP...")
-print(convert_to(180122, 256))
+print(convert_to(180122, 256, 4))
 bitmap = Bitmap()
 bitmap.read_file("beetroot1.bmp")
 #bitmap.read_file("test1.bmp")
@@ -174,6 +200,6 @@ print("Pixel 0, 0", bitmap.get_pixel(0, 199))
 #bitmap.rotate_clockwise_90()
 #bitmap.increase_brightness(0.25)
 #bitmap.convert_to_grayscale_average_method()
-bitmap.extract_red_channel()
+bitmap.extract_magenta_channel()
 bitmap.write_file("beetroot2.bmp")
 #bitmap.write_file("test2.bmp")
