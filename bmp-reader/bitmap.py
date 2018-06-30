@@ -99,23 +99,50 @@ class Bitmap:
             file.close()
 
 
-    # H/W #4
+    def convert_to_grayscale_average_method(self):
+        for r in range(0, self.height):
+            for c in range(0, self.width):
+                red, green, blue = self.get_pixel(r, c)
+                average = int((red + green + blue) / 3)
+                self.set_pixel(r, c, average, average, average)
+
+
+    def extract_red_channel(self):
+        for r in range(0, self.height):
+            for c in range(0, self.width):
+                red, green, blue = self.get_pixel(r, c)
+                #average = int((red + red + red) / 3)
+                self.set_pixel(r, c, red, red, red)
+
+
+    # C/W #1
+    # do the extraction for G and B. And also for C, M, Y and K.
+
+    # C/W #2
+    # implement the other two grayscale conversion methods
+
+    # C/W #3
+    # write a method that blurs the image (3x3 radius)
+
+
+
+                # H/W #4
     # rotate the image clockwise by 90 degrees
-    def rotate_clockwise_90(self):
+    #def rotate_clockwise_90(self):
 
     # H/W #5
     # rotate the image counter clockwise by 90 degrees
-    def rotate_counter_clockwise_90(self):
+    #def rotate_counter_clockwise_90(self):
 
 
     # H/W #6
     # create a cropped version of the current image
-    def crop(self, start_row, start_col, end_row, end_col):
+    #def crop(self, start_row, start_col, end_row, end_col):
 
 
     # H/W #7
     # create a blank bitmap based on the dimension given
-    def create_bitmap(self, width, height):
+    #def create_bitmap(self, width, height):
 
 
     # H/W #8
@@ -123,17 +150,30 @@ class Bitmap:
 
 #write a method in this class that writes the output to a file
 
+def convert_to(number_in_decimal, base):
+    number = number_in_decimal
+    digits = []
+    while number > 0:
+        digit = number % base
+        number = int(number / base)
+        digits.append(digit)
+    #H/W: make sure you return the reversed result
+    return digits
+
 
 print("Hello IP...")
+print(convert_to(180122, 256))
 bitmap = Bitmap()
-# bitmap.read_file("beetroot1.bmp")
-bitmap.read_file("test1.bmp")
+bitmap.read_file("beetroot1.bmp")
+#bitmap.read_file("test1.bmp")
 print("Pixel 0, 0", bitmap.get_pixel(0, 199))
 #
 # for c in range(0, 50):
 #     bitmap.set_pixel(3, c, 255, 255, 0)
 # bitmap.flip_vertical()
-bitmap.rotate_clockwise_90()
+#bitmap.rotate_clockwise_90()
 #bitmap.increase_brightness(0.25)
-#bitmap.write_file("beetroot2.bmp")
-bitmap.write_file("test2.bmp")
+#bitmap.convert_to_grayscale_average_method()
+bitmap.extract_red_channel()
+bitmap.write_file("beetroot2.bmp")
+#bitmap.write_file("test2.bmp")
