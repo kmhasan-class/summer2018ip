@@ -161,13 +161,28 @@ class Bitmap:
 
     # H/W #6
     # create a cropped version of the current image
-    #def crop(self, start_row, start_col, end_row, end_col):
+    def crop(self, start_row, start_col, end_row, end_col):
+        b = Bitmap()
+        b.create_bitmap(end_col - start_col + 1, end_row - start_row + 1)
+        # copy pixel array from this bitmap to bitmap b
+        # then copy everything from bitmap b to this one
+
 
 
     # H/W #7
     # create a blank bitmap based on the dimension given
-    #def create_bitmap(self, width, height):
-
+    def create_bitmap(self, width, height):
+        self.width = width
+        self.height = height
+        filesize = 122 + (width * height * 3)
+        self.byte_array = bytearray(filesize)
+        # write this filesize in bytes [2, 5] in little endian format
+        filesize_in_bytes = convert_to(filesize, 256, 4)
+        print("File size ", filesize_in_bytes)
+        for i in range(2, 5):
+            self.byte_array[i] = filesize_in_bytes[i - 2]
+        imagesize = width * height * 3
+        print("Image size", convert_to(imagesize, 256, 4))
 
     # H/W #8
     # have a look at HIPR (Worksheet - Image Arithmetic, in particular)
@@ -184,7 +199,7 @@ def convert_to(number_in_decimal, base, n):
         digits[n] = digit
         n = n - 1
     #H/W: make sure you return the reversed result
-    return digits
+    return list(reversed(digits))
 
 
 print("Hello IP...")
@@ -200,6 +215,10 @@ print("Pixel 0, 0", bitmap.get_pixel(0, 199))
 #bitmap.rotate_clockwise_90()
 #bitmap.increase_brightness(0.25)
 #bitmap.convert_to_grayscale_average_method()
-bitmap.extract_magenta_channel()
-bitmap.write_file("beetroot2.bmp")
+#bitmap.extract_magenta_channel()
+#bitmap.write_file("beetroot2.bmp")
 #bitmap.write_file("test2.bmp")
+
+b = Bitmap()
+b.create_bitmap(300, 400)
+b.write_file("newbitmap.bmp")
